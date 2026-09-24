@@ -69,7 +69,7 @@ def process_cells(cells):
 
     return map
 
-cap = cv.VideoCapture(0)
+cap = cv.VideoCapture(1)
 
 
 while True:
@@ -77,14 +77,17 @@ while True:
 
     hsv_frame = cv.cvtColor(frame, cv.COLOR_BGR2HSV)
 
-    lower_yellow = np.array([20, 100, 100])
+    lower_yellow = np.array([20, 60, 70])
     upper_yellow = np.array([40, 255, 255])
 
     mask = cv.inRange(hsv_frame, lower_yellow, upper_yellow)
 
     kernel = np.ones((5, 5), np.uint8)
+    mask = cv.erode(mask,kernel,iterations = 1)
     mask = cv.morphologyEx(mask, cv.MORPH_OPEN, kernel)
     contours, _ = cv.findContours(mask, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE)
+
+    frame_copy = frame.copy()
 
     yellow_objects = []
 
@@ -106,7 +109,7 @@ while True:
 
         print(f"Object {idx + 1}: Centroid=({center_x}, {center_y}), BBox (x,y,w,h)=({x},{y},{w},{h}), Area={area}")
 
-        frame_copy = frame.copy()
+
         cv.circle(frame_copy, (center_x, center_y), 4, (0, 0, 255), -1)
         label = f"#{len(yellow_objects) + 1} ({center_x},{center_y})"
 
@@ -114,6 +117,7 @@ while True:
                     cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
     if(len(yellow_objects) >= 3):
+        frame = frame[10:frame.shape[0]-10, 0:frame.shape[1]-0]
         rows, cols, ch = frame.shape
 
         pts = np.float32(sort_points(np.array([obj['centroid'] for obj in yellow_objects[:3]])))
