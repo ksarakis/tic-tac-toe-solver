@@ -57,7 +57,7 @@ send_position_command(d, initial_config)
 with mujoco.viewer.launch_passive(m, d) as viewer:
     # show_cube(viewer, desired_pose, np.eye(3))
     
-    configs = x_writer(robot_chain, z_draw=0.08, z_lift=0.15)
+    configs = x_writer(robot_chain, center=[0.1, 0.1])
 
     for config in configs:
         move_to_pose(m, d, viewer, config, 2.0)

@@ -10,22 +10,29 @@ def ik_to_config(ik_solution, gripper = 0):
         "gripper":       gripper,  # Explicit gripper angle (0 = closed, 100 = open)
     }
 
-def x_writer(robot_chain, z_draw, z_lift):
 
-    # Sequence: Stroke 1 -> Lift -> Reposition -> Touchdown -> Stroke 2
+
+# NOT USED
+
+def x_writer(robot_chain, center, side_length=0.03, z_draw=0.05, z_lift=0.1):
+
+    half = side_length / 2.0
+    cx, cy = center
+
     waypoints = [
-        [0.30,  0.08, z_draw],  # Up-left
-        [0.20, -0.08, z_draw],  # Bottom-right
-        [0.20, -0.08, z_lift],  # Lift pen
-        [0.30, -0.08, z_lift],  # Above top-right
-        [0.30, -0.08, z_draw],  # Lower to top-right
-        [0.20,  0.08, z_draw],  # Bottom-left
-        [0.20,  0.08, z_lift],  # Lift pen
-    ]
+        [cx + half, cy + half, z_lift],  # Top-Left
+        [cx + half, cy + half, z_draw],  # Top-Left
+        [cx - half, cy - half, z_draw],  # Bottom-Right
+        [cx - half, cy - half, z_lift],  # Lift pen
 
+        [cx + half, cy - half, z_lift],  # Top-Right
+        [cx + half, cy - half, z_draw],  # Top-Right
+        [cx - half, cy + half, z_draw],  # Bottom-Left
+        [cx - half, cy + half, z_lift],  # Lift pen
+    ]
     joint_configs = []
     for pt in waypoints:
-        ik_sol = robot_chain.inverse_kinematics(pt)
+        ik_sol = robot_chain.inverse_kinematics(pt, orientation_mode="Z", target_orientation=[0, 0, -1])
         joint_configs.append(ik_to_config(ik_sol, gripper=0.0))
 
     return joint_configs

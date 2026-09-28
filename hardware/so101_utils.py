@@ -49,6 +49,9 @@ def setup_motors(calibration, PORT_ID):
             bus.write("D_Coefficient", motor, 32) 
     return bus
 
+def write_gripper(bus, current_position, gripper_position):
+    current_position["gripper"] = gripper_position
+    bus.sync_write("Goal_Position", current_position, normalize=True)
 
 def move_to_pose(bus, desired_position, duration):
     start_time = time.time()

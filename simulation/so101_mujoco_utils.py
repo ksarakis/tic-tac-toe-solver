@@ -1,6 +1,5 @@
 # Code from https://maegantucker.com/ECE4560/
 
-
 import time
 import mujoco
         
