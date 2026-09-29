@@ -10,7 +10,6 @@
 
 **To do:**
 
-- Design and 3d-print noughts and crosses.
 
 - Design and 3d-print(or find any other solution) a camera stand
 
@@ -30,6 +29,8 @@ In the first place, I wanted the arm to play the game drawing Xs and Os. However
 Moreover, due to limited FK and IK derivation knowledge, I didn't solve myself neither of the problems. 
 
 When experimenting with IKpy at first, I found it difficult to control the orientation of the end effector, but after searching documentation, I found out how to do it. 
+
+After 3d-printing Xs and Os, I found out that the current vision solution was not working at all. So, I experimented with other ways of classifying cells. The current one takes each cell, ANDs it with a simple circle, extract its contours and finds if there is a hole in the shape. If yes, it surely is a O, since X does not contain any holes in its shape. The AND operation was inserted because a simple search in contours for holes could create false positives from the shades. 
 
 ## Project structure
 
