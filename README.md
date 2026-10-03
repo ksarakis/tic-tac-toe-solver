@@ -8,14 +8,16 @@
 
 - Working IK solver(`ikpy`) both in real life and in simulation.
 
+- Noticed small discrepancy between theoritical and real `[0, 0, 0, 0, 0, 0]`. Need to calibrate again and/or add angle offsets. 
+
+- Implemented tic-tac-toe solver.
+
 **To do:**
 
 
 - Design and 3d-print(or find any other solution) a camera stand
 
 - Test pick-and-place routine for game items.
-
-- Implement a solver for tic-tac-toe(possible algorithm: mini-max)
 
 - Piece all of these together.
 
@@ -51,4 +53,4 @@ There are 3 yellow boxes in three out of the four corners in order to help compu
 
 The robotic arm used in this project is [SO-ARM 101](https://github.com/TheRobotStudio/SO-ARM100) by RobotStudio and HuggingFace. 
 
-All MuJoCo and IRL scripts are based on Maegan Tucker's lab notes from the GeorgiaTech course *"Introduction to Robotics and Automation"*.
+All MuJoCo and IRL scripts are based on [Maegan Tucker's lab notes](https://maegantucker.com/ECE4560/so101/) from the GeorgiaTech course *"Introduction to Robotics and Automation"*.
